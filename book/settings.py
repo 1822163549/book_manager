@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins':['django.templatetags.static'],
         },
     },
 ]
@@ -76,8 +77,18 @@ WSGI_APPLICATION = 'book.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 数据库引擎（是mysql还是oracle等）
+        'ENGINE': 'django.db.backends.mysql',
+        # 数据库的名字
+        'NAME': 'book',
+        # 连接mysql数据库的用户名
+        'USER': 'root',
+        # 连接mysql数据库的密码
+        'PASSWORD': 'root',
+        # mysql数据库的主机地址
+        'HOST': '127.0.0.1',
+        # mysql数据库的端口号
+        'PORT': '3306',
     }
 }
 
