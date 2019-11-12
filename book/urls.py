@@ -18,6 +18,7 @@ from app import views
 
 urlpatterns = [
     path('', views.index,name='index'),
-    path('add', views.add_book,name='add'),
-    path('detail', views.book_detail,name='detail'),
+    path('add/', views.add_book,name='add'),
+    path('detail/<int:book_id>/', views.book_detail,name='detail'),
+    path('delete/', views.delete_book,name='delete'),  
 ]

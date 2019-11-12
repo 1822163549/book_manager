@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from django.db import connection
 
 # Create your views here.
@@ -14,8 +14,27 @@ def index(request):
 
 
 def add_book(request):
-	return render(request,'add_book.html')
+	if request.method == 'GET':
+		return render(request,'add_book.html')
+	else:
+		name = request.POST.get('name')
+		author = request.POST.get('author')
+		cursor = get()
+		cursor.execute("insert into book(id,name,author) value(null,'%s','%s')" % (name,author))
+		return redirect(reverse('index'))
 
 
 def book_detail(request,book_id):
-	return render(request,'book_detail.html')
+	cursor = get()
+	cursor.execute("select id,name,author from book where id=%s" % book_id)
+	book = cursor.fetchone()
+	return render(request,'book_detail.html',context={'book':book})
+
+def delete_book(request):
+	if request.method == 'POST':
+		book_id = request.POST.get('book_id')
+		cursor = get()
+		cursor.execute("delete from book where id=%s" % book_id)
+		return redirect(reverse('index'))
+	else:
+		raise RuntimeError("删除失败")
